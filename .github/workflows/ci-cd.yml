@@ -1,0 +1,23 @@
+name: CI-CD Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download code
+        uses: actions/checkout@v6
+
+      - name: Check that index.html exists
+        run: |
+          if [ ! -f index.html ]; then
+            echo "ERROR: index.html not found"
+            exit 1
+          fi
+          echo "OK: index.html found"
